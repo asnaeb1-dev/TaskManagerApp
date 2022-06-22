@@ -1,0 +1,13 @@
+.title-bar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50vh;
+    padding-left: 10px;
+}
+
+.title-bar > img {
+    margin-left: 10px;
+    margin-right: 10px;
+}

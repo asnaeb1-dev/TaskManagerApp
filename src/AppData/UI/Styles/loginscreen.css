@@ -1,0 +1,166 @@
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.directive{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.directive > p {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+.directive > p:nth-child(2) {
+    color: blue;
+}
+
+.directive > p:nth-child(2):hover {
+    color: blue;
+    text-shadow: 2px 2px #d0d0d0;
+
+}
+
+
+.part-1{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.part-2{
+    flex: 1;
+    /* background-image: url('../../../login_page_svg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70vh; */
+    display: flex;
+}
+
+.part-divider{
+    height: 80vh;
+    width: 1.5px;
+    background: black;
+    align-self: center;
+}
+
+.login-form{
+    width: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.inp-text{
+    width: 80%;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0px;
+    outline: none;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #d0d0d0;
+}
+
+.inp-text:focus{
+    width: 80%;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 0px;
+    outline: none;
+    border-bottom: 2px solid rgb(33, 30, 30);
+}
+
+.div-line{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.divider{
+    height: 1.5px;
+    width: 20vh;
+    background: black;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.other-social-media{
+    display: flex;
+    justify-content: space-between;
+    width: 52vh;
+}
+
+.btn{
+    width: 84%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 450px;
+    margin-top: 40px;
+    background: white;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn > p{
+    flex: 1
+}
+
+.btn:hover{
+    width: 84%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    max-width: 450px;
+    margin-top: 40px;
+    background: black;
+    color: white;
+}
+
+.fb-btn{
+    padding: 10px;
+    max-width: 450px;
+    margin-top: 20px;
+    flex: 1;
+    border: 2px solid #1773ea;
+    background: white;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.fb-btn:hover{
+    padding: 10px;
+    max-width: 450px;
+    margin-top: 20px;
+    flex: 1;
+}
+
+.g-btn{
+    padding: 10px;
+    max-width: 450px;
+    margin-top: 20px;
+    flex: 1;
+    border: 2px solid #d73b29;
+    background: white;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
