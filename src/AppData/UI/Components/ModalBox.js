@@ -6,7 +6,7 @@ import Modal from 'react-modal'
 import './ComponentStyles/modalbox.css'
 import AddTodoModalUI from './AddTodoModalUI'
 
-const ModalBox = ({isOpen}) => {
+const ModalBox = ({isOpen, getTodo, isUploadingTodo}) => {
 
     const customStyle =  {
         content:{
@@ -27,7 +27,7 @@ const ModalBox = ({isOpen}) => {
 
     return (
         <Modal style={customStyle} isOpen={isOpen} >
-            <AddTodoModalUI/>
+            <AddTodoModalUI isUploadingTodo={ isUploadingTodo } addTodo={(todoObject) => getTodo(todoObject)}/>
         </Modal>
     )
 }
