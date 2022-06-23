@@ -31,3 +31,26 @@
     width: 60vh;
     height: 60vh;
 }
+
+#directive{
+    display: flex;
+    flex-direction: row;
+}
+
+#directive > p{
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+#directive > p:nth-child(2){
+    font-size: 14px;
+    padding-left: 5px;
+    color: blue;
+}
+
+#directive > p:nth-child(2):hover{
+    font-size: 14px;
+    padding-left: 5px;
+    color: blue;
+    text-shadow: 2px 2px #d0d0d0;
+}

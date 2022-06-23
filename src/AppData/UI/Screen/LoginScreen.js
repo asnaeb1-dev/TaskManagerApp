@@ -4,7 +4,7 @@ import { BsFacebook, BsGoogle } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
 import { css } from "@emotion/react";
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
@@ -16,11 +16,12 @@ import img3 from '../../../img3.svg'
 const LoginScreen = () => {
 
     //state
+    const location = useLocation();
     const[userCreds, setUserCreds] = useState({
         email: "",
         password: ""
     })
-    const[isLoading, setIsLoading] = useState(false)
+    const[loading, setLoading] = useState(false)
 
     const handleSubmitForm = (event) => {
         event.preventDefault()
@@ -36,7 +37,7 @@ const LoginScreen = () => {
                     <input minLength={8} className='inp-text' placeholder='Enter password'type={'password'} onChange={(e) => setUserCreds({ email: userCreds.email, password:e.target.value })} />
                     <button className='btn'>
                         <p>Login</p>
-                        <ClipLoader color={'blue'} loading={isLoading} css={css} size={10} />
+                        <ClipLoader color={'blue'} loading={loading} css={css} size={10} />
                     </button>
                 </form>
                 
@@ -65,9 +66,9 @@ const LoginScreen = () => {
                 <div className='part-divider'></div>
                 <div className='main-part-2'>
 					<Carousel showArrows={false} showStatus={false} showIndicators={false} centerMode={false} showThumbs={false} infiniteLoop={true} autoPlay={true} className='carousel'>
-						<img width={'400px'} height={'400px'}  src={img1} />
-						<img  src={img2} />
-						<img  src={img3} />
+						<img alt='use case 1' src={img1} />
+						<img alt='use case 2' src={img2} />
+						<img alt='use case 3' src={img3} />
 					</Carousel>
 				</div>
             </div>
