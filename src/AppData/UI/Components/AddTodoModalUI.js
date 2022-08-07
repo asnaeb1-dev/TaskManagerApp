@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import './ComponentStyles/addtodomodalui.css'
 import { Checkbox } from 'semantic-ui-react'
 import { ClipLoader } from 'react-spinners'
+import { ImCross } from 'react-icons/im'
 
-const AddTodoModalUI = ({ addTodo, isUploadingTodo }) => {
+const AddTodoModalUI = ({ addTodo, isUploadingTodo, dismiss }) => {
 
 
     const[checked, setChecked] = useState(false)
@@ -20,7 +21,10 @@ const AddTodoModalUI = ({ addTodo, isUploadingTodo }) => {
 
     return (
         <div className='add-todo-modal-ui'>
-            <h3>Add new task</h3>
+            <div className='modal-title-box'>
+                <h3>Add new task</h3>
+                <span onClick={() => dismiss()} id='cross-icon'><ImCross size={15} color={'black'} /></span>
+            </div>
             <form onSubmit={(e) => submitTodo(e)} className='add-todo-form'>
                 <input name='tasktitle' className='inp-text' type={'text'} minLength={8} maxLength={50} placeholder='Enter task title' />
                 <textarea name='taskdesc' spellCheck={true} className='textarea' minLength={8} maxLength={500} placeholder='Enter a task description... '></textarea>

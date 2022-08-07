@@ -1,49 +1,38 @@
-import React from 'react'
-import './ComponentStyles/todoitem.css'
+import React from "react";
+import './ComponentStyles/todoitem.css';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite, MdEdit, MdDeleteForever } from "react-icons/md";
+import { ImCross, ImCheckmark } from 'react-icons/im';
+import { IoIosArrowBack } from "react-icons/io";
+const TodoItem = ({title, desc, isFavourite, isDone}) => {
 
-import { RiDeleteBinFill } from 'react-icons/ri'
-import { BsHeartFill, BsHeart } from 'react-icons/bs'
-import { MdModeEdit } from 'react-icons/md'
+    const test = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+    It has survived not only five centuries, but also the leap into electronic typesetting, 
+    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets 
+    containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
+    PageMaker including versions of Lorem Ipsum.`
 
-const TodoItem = ({ title, desc, isDone, isFavorite, importance }) => {
-
-    const getColorByImportance = (imp) => {
-        switch(imp){
-            case 1:
-                return 'importance-id-severe'
-            case 2:
-                return 'importance-id-moderate'
-            case 3:
-            default:
-                return 'importance-id-casual'
-        }
-    }
-
-    return (
-        <div className='todo-item'>
-            <div className={getColorByImportance(importance)}></div>
-            <div className='todo-info'>
-                <div id='title-bar'>
-                    <h4>{title}</h4>
-                </div>
-                <div id='desc-box'>
-                    <p>{desc}</p>
-                </div>
-                <div id='console-interact'>
-                    <div id='left-half'></div>
-                    <div id='right-half'>
-                        <div className='item'>
-                            <RiDeleteBinFill color={'black'} size={20}/>
-                        </div>
-                        <div className='item'>
-                            {
-                                isFavorite?<BsHeartFill color={'red'} size={20}/> : <BsHeart color={'red'} size={20}/>
-                            }
-                            
-                        </div>
-                        <div className='item'>
-                            <MdModeEdit color={'black'} size={20}/>
-                        </div>
+    return(
+        <div className="todo-item-main">
+            <div className={!isDone ? "todo-outline-undone": "todo-outline-done"}>
+                <div className="todo-box" >
+                    <div id="todo-item-title-div">
+                        {/* this h3 needs to be here so as not to disturb the rest of the layout */}
+                        <h3 id="todo-title">{}</h3>
+                        <span id="arrow-icon">
+                            <MdOutlineFavoriteBorder size={20} color={'red'}/>
+                        </span>
+                        <span id="arrow-icon">
+                            <ImCheckmark size={20} color={'green'}/>
+                        </span>
+                        <span id="arrow-icon">
+                            <MdDeleteForever size={20} color={'black'}/>
+                        </span>
+                    </div>
+                    <p id="todo-desc">{title.length > 67 ? title.substring(0, 67) +"..." : title }</p>
+                    <div id="edit-btn">
+                        <MdEdit color="black" size={20} />
                     </div>
                 </div>
             </div>
@@ -51,4 +40,4 @@ const TodoItem = ({ title, desc, isDone, isFavorite, importance }) => {
     )
 }
 
-export default TodoItem
+export default TodoItem;

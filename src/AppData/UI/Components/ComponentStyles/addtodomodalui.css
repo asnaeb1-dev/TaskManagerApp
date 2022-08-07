@@ -21,6 +21,29 @@
     background: black;
 }
 
+#cross-icon:hover{
+  box-shadow: 5px 5px 5px #d0d0d0;
+  border-radius: 100px;
+  padding: 5px;
+}
+
+#cross-icon{
+  border-radius: 100px;
+  padding: 5px;
+}
+
+.modal-title-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 90%;
+}
+
+.modal-title-box > h3{
+  flex: 1;
+  text-align: center;
+}
+
 .textarea{
     width: 80%;
     min-height: 80%;

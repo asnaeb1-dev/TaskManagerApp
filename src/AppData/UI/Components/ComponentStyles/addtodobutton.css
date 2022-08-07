@@ -4,9 +4,7 @@
     align-items: center;
     border: 2px solid black;
     background: white;
-    position: absolute;
-    bottom: 5%;
-    right: 5%;
+    
     padding-left: 5px;
     padding-right: 5px;
 }
