@@ -16,8 +16,7 @@ import img3 from '../../../img3.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { createUserAccount } from '../../Data/API/firebaseLogin'
-import { async } from '@firebase/util';
+import { createUserAccount, saveUserToDB } from '../../Data/API/firebaseLogin'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -52,9 +51,13 @@ const SignUpScreen = () => {
 		const response = await createUserAccount(email, password)
 		if(!response.error){
 			const user = response.obj
+			console.log(user);
 			if(!user.emailVerified){
+
+				(async() => await saveUserToDB())()
+
 				//move to login page
-				navigate("/login", { state: { isSignUpSuccessful: true } })
+				// navigate("/", { state: { isSignUpSuccessful: true } })
 			}else{
 				//login user directly and move to home page
 			}

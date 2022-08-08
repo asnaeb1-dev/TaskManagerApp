@@ -12,7 +12,7 @@ const AllTodoScreen = () => {
 
     const[addTodoPopup, setAddTodoPopup] = useState(false);
     const[isUploadingTodo, setIsUploadingTodo] = useState(false);
-    const[todoList, setTodoList] = useState([1, 1, 1, 1]);
+    const[todoList, setTodoList] = useState([1, 1, 1, 1,1,1,1]);
 
     const getTodo = (todo) => {
         console.log(todo);
@@ -52,17 +52,16 @@ const AllTodoScreen = () => {
 
     return(
         <div className="all-todos-main">
-            <Header title={"Todos"} type={2}/>
+            <Header title={"Todos"} type={1}/>
             {
                 todoList.length !== 0 ? 
                     <div className="main-box">
                     {
                         todoList.map(item => {
-                            return <TodoItem isDone={false} title={"Water the lawn and do stuff and then get food for the family for dinner"} />
+                            return <TodoItem isDone={true} title={"Water the lawn and do stuff and then get food for the family for dinner"} />
                         })
                     }
-                    </div>:
-                    emptyBox()
+                    </div>:emptyBox()
             }
             
             <ModalBox 

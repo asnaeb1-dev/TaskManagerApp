@@ -2,15 +2,7 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    padding-left: 20px;
-    padding-right: 20px;
-
-    overflow: hidden;
-    /* background-image: url('../../../nodata.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 30vh; */
-    
+    overflow: hidden; 
 }
 
 .example::-webkit-scrollbar {
@@ -27,7 +19,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 5px;
-    row-gap: 5px;
+    row-gap: 30px;
     overflow-y:scroll;
 }
 

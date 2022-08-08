@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import '../Styles/loginscreen.css'
 import { BsFacebook, BsGoogle } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
@@ -12,8 +12,16 @@ import img1 from '../../../img1.svg'
 import img2 from '../../../img2.svg'
 import img3 from '../../../img3.svg'
 
+import { loginUser } from '../../Data/API/firebaseLogin';
+import { useNavigate } from 'react-router-dom';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const LoginScreen = () => {
+
+    const navigate = useNavigate();
 
     //state
     const location = useLocation();
@@ -25,8 +33,24 @@ const LoginScreen = () => {
 
     const handleSubmitForm = (event) => {
         event.preventDefault()
-        console.log(userCreds);
+        console.log(userCreds);  
+        handleLogin()      
     }
+
+    const handleLogin = async() => {
+        setLoading(true);
+        const user = await loginUser(userCreds.email, userCreds.password);
+        if(!user.error){
+            navigate('/home');
+        }else{
+            toast("Failed to login!");
+        }
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        //check if user already exists and if it does then move to 
+    })
 
     return (
         <div className='main'>
@@ -72,6 +96,7 @@ const LoginScreen = () => {
 					</Carousel>
 				</div>
             </div>
+            <ToastContainer position='bottom-right'/>
         </div>
     )
 }
