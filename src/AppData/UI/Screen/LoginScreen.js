@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useLayoutEffect} from 'react'
 import '../Styles/loginscreen.css'
 import { BsFacebook, BsGoogle } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
@@ -12,29 +12,41 @@ import img1 from '../../../img1.svg'
 import img2 from '../../../img2.svg'
 import img3 from '../../../img3.svg'
 
-import { loginUser } from '../../Data/API/firebaseLogin';
+import { getCurrentUser, loginUser, saveUserToDB } from '../../Data/API/firebaseLogin';
 import { useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { isNetworkConnected } from '../../Data/Utility/Util';
+import { CONNECTION_FAILURE } from '../../Data/Utility/Strings';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
 const LoginScreen = () => {
 
     const navigate = useNavigate();
-
-    //state
-    const location = useLocation();
     const[userCreds, setUserCreds] = useState({
         email: "",
         password: ""
     })
     const[loading, setLoading] = useState(false)
+    const[isConnAvailable, setConnectionAvailable] = useState(false)
 
+    //this function handles all the cases before making an API call.
     const handleSubmitForm = (event) => {
-        event.preventDefault()
-        console.log(userCreds);  
-        handleLogin()      
+        event.preventDefault();
+        console.log(userCreds);
+        //check if connection is available
+        if(isConnAvailable){
+            //check if fields are empty
+            if(userCreds.email === "" || userCreds.password === ""){
+                toast("Cannot leave fields empty!");
+            }else{
+                handleLogin()      
+            } 
+        }else{
+            toast(CONNECTION_FAILURE);
+        }
     }
 
     const handleLogin = async() => {
@@ -49,7 +61,23 @@ const LoginScreen = () => {
     }
 
     useEffect(() => {
-        //check if user already exists and if it does then move to 
+        
+    },[])
+
+
+    useLayoutEffect(() => {
+        const connectionStatus = isNetworkConnected();
+        if(!connectionStatus){
+            toast(CONNECTION_FAILURE);
+        }else{
+            //get current user if available
+            onAuthStateChanged(getAuth(), user => {
+                if(user){
+                    navigate("/home")
+                }
+            })
+        }
+        setConnectionAvailable(connectionStatus)
     })
 
     return (

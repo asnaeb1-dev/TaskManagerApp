@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import './ComponentStyles/todoitem.css';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite, MdEdit, MdDeleteForever } from "react-icons/md";
 import { ImCross, ImCheckmark } from 'react-icons/im';
 import { BsExclamation } from "react-icons/bs";
 
-const TodoItem = ({title, desc, isFavourite, isUrgent, isDone}) => {
+const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!", desc = "", isFavourite = false, isUrgent = false, isDone = false, cardColor = '#f4946f'}) => {
+
+    /*
+    .todo-box{
+    background: #f4946f;
+    border-radius: 30px;
+    padding: 20px;
+}
+    */
+
+    const boxStyle = { width: '100%', padding: '20px', borderRadius: '30px', background:cardColor }
+
     return(
         <div className="todo-item-main">
-            <div className={!isDone ? "todo-outline-undone": "todo-outline-done"}>
-                <div className="todo-box" >
+                <div style={boxStyle}  >
                     <div id="todo-item-title-div">
-                        {/* this h3 needs to be here so as not to disturb the rest of the layout */}
+                        {
+                            isFavourite?
+                                <span id="arrow-icon">
+                                    <MdOutlineFavoriteBorder size={20} color={'red'}/>
+                                </span>:null
+                        }
+                        
                         <span id="arrow-icon">
-                            <MdOutlineFavoriteBorder size={20} color={'red'}/>
-                        </span>
-                        <span id="arrow-icon">
-                            <ImCheckmark size={20} color={'green'}/>
+                            {
+                                isDone?
+                                <ImCheckmark size={20} color={'green'}/>:
+                                <ImCross size={15} color={'red'}/>
+                            }
                         </span>
                         <span id="arrow-icon">
                             <MdDeleteForever size={20} color={'black'}/>
@@ -39,7 +56,6 @@ const TodoItem = ({title, desc, isFavourite, isUrgent, isDone}) => {
                         </span>
                     </div>
                 </div>
-            </div>
         </div>
     )
 }

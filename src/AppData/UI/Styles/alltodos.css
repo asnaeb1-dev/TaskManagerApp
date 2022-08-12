@@ -2,24 +2,19 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    overflow: hidden; 
+    overflow-y: scroll; 
 }
 
-.example::-webkit-scrollbar {
-    display: none;
-}
 
-.example {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
 .main-box{
-    width: 100%;
-    height: 88vh;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 5px;
-    row-gap: 30px;
-    overflow-y:scroll;
+    margin: 5px 20px 5px 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    grid-auto-flow: row;
 }
 
+.item-x{
+    background: red;
+    height: 40vh;
+}

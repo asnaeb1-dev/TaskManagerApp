@@ -1,48 +1,97 @@
 import React, { useState } from 'react'
 import './ComponentStyles/addtodomodalui.css'
 import { Checkbox } from 'semantic-ui-react'
-import { ClipLoader } from 'react-spinners'
-import { ImCross } from 'react-icons/im'
+import { ClipLoader } from 'react-spinners';
+import { css } from "@emotion/react";
+import { ImCross, ImPlus } from 'react-icons/im'
+import Switch from 'react-switch';
 
 const AddTodoModalUI = ({ addTodo, isUploadingTodo, dismiss }) => {
 
+    const colors = ['#f4c268', '#f4946f', '#ad8cf2', '#02caf2', '#d9e587', '#f74f4f', '#77dc7e', 'pink', '#89b7f7'];
+    const[currentColor, setCurrentColor] = useState(0);
+    const[isChecked, setChecked] = useState(false);
+    //these are the styles 
+    const getItemStyle = (color) => {
+        return  {width: '25px', 
+                height:'25px',
+                marginLeft: '10px',
+                marginRight: '10px',
+                backgroundColor: color,
+                borderRadius: '100%' };
+    }
+    
+    const getItemStyleSelected = (color) => {
+        return {width: '30px', 
+                height:'30px',
+                marginLeft: '10px',
+                marginRight: '10px',
+                backgroundColor: color,
+                boxShadow: '1px 3px 18px #888888',
+                borderRadius: '100%' };
+    }
 
-    const[checked, setChecked] = useState(false)
-    const submitTodo = (e) => {
+    const handleTodoDataSubmit = (e) => {
         e.preventDefault();
-
-        const todotitle = e.target.tasktitle.value
-        const tododesc = e.target.taskdesc.value
-        const isTodoDone = e.target.isTaskDone.value
-
-        addTodo({ todotitle, tododesc, isTodoDone })
-
+        const user = {
+            title: e.target.todotitle.value,
+            description: e.target.tododesc.value,
+            completionStatus: isChecked,
+            startDate: "",
+            endDate: "",
+            color: colors[currentColor]
+        }
+        addTodo(user)
     }
 
     return (
-        <div className='add-todo-modal-ui'>
-            <div className='modal-title-box'>
-                <h3>Add new task</h3>
-                <span onClick={() => dismiss()} id='cross-icon'><ImCross size={15} color={'black'} /></span>
-            </div>
-            <form onSubmit={(e) => submitTodo(e)} className='add-todo-form'>
-                <input name='tasktitle' className='inp-text' type={'text'} minLength={8} maxLength={50} placeholder='Enter task title' />
-                <textarea name='taskdesc' spellCheck={true} className='textarea' minLength={8} maxLength={500} placeholder='Enter a task description... '></textarea>
-                <div className='is-done-task-div'>
-                    <p>Completion status </p>
-                    <label class="switch">
-                        <input onChange={(e) => setChecked(e.target.checked)} checked={checked} name='isTaskDone' type="checkbox"/>
-                        <span className="slider"></span>
-                    </label>
-                    <p>{checked ? "Done": "Undone"}</p>                    
+        <div className='todo-modal'>
+            <div id='todo-modal-title-div'>
+                <h3 style={{margin: '0px', flex: 1}}>Add Todo</h3>
+                <div id='dismiss-btn' onClick={() => dismiss()}>
+                    <ImCross size={18} color={'black'} />
                 </div>
-                <button className='newbtn' disabled = {isUploadingTodo}>
-                    <p>{isUploadingTodo ? "Adding task..." : "Add task"}</p>
-                    <ClipLoader color={'blue'} loading={isUploadingTodo} size={10} />
-                </button>
+            </div>
+            <div className='color-chooser'>
+                {
+                    colors.map((item, index) => {
+                        return <div onClick={() => setCurrentColor(index)} id='item-index' key={index} style={currentColor === index ? getItemStyleSelected(item) : getItemStyle(item)} ></div>
+                    })
+                }
+            </div>
+            <form className='todo-form' onSubmit={e => handleTodoDataSubmit(e)}>
+                <div id='title-text-div'>
+                    <input disabled={isUploadingTodo} type={'text'} name='todotitle' id='title-inp' placeholder='Enter title...'  />
+                    <label style={{flex: 1, justifyContent: 'flex-end', display:'flex', alignItems:'center'}}>
+                        <p style={{marginRight: '10px', fontSize: '13px'}}>{isChecked? 'Completed' : "Incomplete"}</p>
+                        <Switch  disabled={isUploadingTodo} checked={isChecked} onChange={() => setChecked(!isChecked)} />
+                    </label>
+                </div>
+                <div id='desc-div'>
+                    <textarea disabled={isUploadingTodo} name='tododesc' placeholder='Enter description...' id='desc-inp'></textarea>
+                </div>
+                <div id='time-limit-div-todo-box'>
+                    <div className='from-date-div'>
+                        <p>22nd November, 2021</p>
+                    </div>
+                    <p>-</p>
+                    <div className='from-date-div'>
+                        <p>30th November, 2021</p>
+                    </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection:'row', justifyContent: 'flex-end' }}>
+                    <button disabled={isUploadingTodo} id='submit-todo-btn'>
+                        {
+                            !isUploadingTodo?
+                                <ImPlus size={15} color={'black'} />:
+                                <ClipLoader color={'black'} loading={isUploadingTodo} css={css} size={15} />
+                        }
+                    </button>
+                </div>
             </form>
+            
         </div>
     )
 }
 
-export default AddTodoModalUI
+export default AddTodoModalUI;

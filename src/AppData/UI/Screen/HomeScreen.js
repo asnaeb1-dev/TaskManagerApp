@@ -6,6 +6,7 @@ import Sidebar from '../Components/Sidebar';
 import AllTodoScreen from './AllTodoScreen';
 import FavouriteScreen from './FavouriteScreen';
 import SchedulerScreen from './SchedulerScreen';
+import UserProfileScreen from './UserProfileScreen';
 
 const HomeScreen = () => {
 
@@ -17,6 +18,7 @@ const HomeScreen = () => {
             case 1: return <AllTodoScreen/>;
             case 2: return <FavouriteScreen/>;
             case 3: return <SchedulerScreen/>;
+            case 4: return <UserProfileScreen/>;
             default: return <AllTodoScreen/>;
         }
     }

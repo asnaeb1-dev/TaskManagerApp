@@ -1,4 +1,19 @@
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth'
+import { getDocs, collection, getFirestore, addDoc } from 'firebase/firestore'
+//firebaseConfig
+const firebaseConfig = {
+    apiKey: "AIzaSyBIssmxOtQIRq59opgep7hKbOFQdqYp2NA",
+    authDomain: "taskmanager-f829e.firebaseapp.com",
+    projectId: "taskmanager-f829e",
+    storageBucket: "taskmanager-f829e.appspot.com",
+    messagingSenderId: "355625676933",
+    appId: "1:355625676933:web:9f4df039d7e2450c0639ec"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app)
+const auth = getAuth();
 
 const createUserAccount = async (email, password) => {
     const auth = getAuth()
@@ -19,7 +34,6 @@ const createUserAccount = async (email, password) => {
 
 //Login user
 const loginUser = async (email, password) => {
-    const auth = getAuth();
     try{
         const user = await signInWithEmailAndPassword(auth, email, password);
         return {error: false, response: user}
@@ -31,15 +45,26 @@ const loginUser = async (email, password) => {
     }
 }
 //get the current user which is logged in
-const getCurrentUser = async() => {
-    
-
+const getCurrentUser = () => {
+    return auth.currentUser;
 }
 
-const saveUserToDB = async() => {
-    
+const saveUserToDB = async(userData) => {
+    const users = collection(db, "users")
+    try{
+        const response = await addDoc(users, userData);
+        return(
+            {error: false,
+            response}
+        )
+    }catch(e){
+        return{
+            error: true,
+            response: e
+        }
+    }    
 }
 
 
-export { createUserAccount, loginUser, saveUserToDB }
+export { createUserAccount, loginUser, saveUserToDB, getCurrentUser }
 

@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createUserAccount, saveUserToDB } from '../../Data/API/firebaseLogin'
 
 import { useNavigate } from 'react-router-dom'
+import { INCONCLUSIVE_ERROR } from '../../Data/Utility/Strings';
 
 const SignUpScreen = () => {
 
@@ -42,22 +43,27 @@ const SignUpScreen = () => {
 			toast(INCORRECT_PASSWORD)
 		}else{
 			//initiate signup
-			signUpUser(email, password)
+			signUpUser(email, password, username)
 		}
 	}
 
 
-	const signUpUser = async (email, password) => {
+	const signUpUser = async (email, password, username) => {
 		const response = await createUserAccount(email, password)
 		if(!response.error){
 			const user = response.obj
-			console.log(user);
+			// console.log(user);
 			if(!user.emailVerified){
-
-				(async() => await saveUserToDB())()
-
-				//move to login page
-				// navigate("/", { state: { isSignUpSuccessful: true } })
+				(async() => {
+					const response = await saveUserToDB({ email, username, todos:[], creationDate: Date.now(), displayPicture: '' });
+					if(response.error){
+						toast(INCONCLUSIVE_ERROR)
+						console.log(response.response);
+					}else{
+						// move to login page
+						navigate("/", { state: { isSignUpSuccessful: true } })
+					}
+				})()
 			}else{
 				//login user directly and move to home page
 			}
@@ -82,7 +88,7 @@ const SignUpScreen = () => {
                   </form>
 				  <div id='directive'>
 					<p>Already have an account?</p>
-					<p onClick={() => navigate("/login")} >Login</p>
+					<p onClick={() => navigate("/")} >Login</p>
 				</div>
               </div>
             <div className='part-2'>

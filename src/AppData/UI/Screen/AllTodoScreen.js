@@ -12,7 +12,7 @@ const AllTodoScreen = () => {
 
     const[addTodoPopup, setAddTodoPopup] = useState(false);
     const[isUploadingTodo, setIsUploadingTodo] = useState(false);
-    const[todoList, setTodoList] = useState([1, 1, 1, 1,1,1,1]);
+    const[todoList, setTodoList] = useState([]);
 
     const getTodo = (todo) => {
         console.log(todo);
@@ -22,7 +22,8 @@ const AllTodoScreen = () => {
         setTimeout(() => {
             setAddTodoPopup(false)
             setIsUploadingTodo(false)
-        }, 5000)
+            setTodoList([...todoList, todo])
+        }, 1000)
     }
     
     //this is the UI for when there is nothing to display
@@ -50,20 +51,15 @@ const AllTodoScreen = () => {
         )
     }
 
-    return(
-        <div className="all-todos-main">
-            <Header title={"Todos"} type={1}/>
-            {
-                todoList.length !== 0 ? 
-                    <div className="main-box">
-                    {
-                        todoList.map(item => {
-                            return <TodoItem isDone={true} title={"Water the lawn and do stuff and then get food for the family for dinner"} />
-                        })
-                    }
-                    </div>:emptyBox()
-            }
-            
+    return (<div className="all-todos-main">
+            <Header title={"Todos"} type={1} openModal={() => setAddTodoPopup(true)} />
+            {<div className="main-box">
+                {
+                    todoList.map(item => {
+                        return <TodoItem title={item.title} isDone={item.completionStatus} cardColor={item.color}  />
+                    })
+                }
+            </div>}
             <ModalBox 
                 isUploadingTodo={isUploadingTodo} 
                 getTodo={(todo) => getTodo(todo)} 

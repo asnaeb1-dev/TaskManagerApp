@@ -10,23 +10,26 @@ const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
 
     const customStyle =  {
         content:{
-            border: '2px solid black',
-            borderRadius: '0px',
+            borderRadius: '50px',
             top: '50%',
             left: '50%',
             right: 'auto',
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
-            width: '50vw',
-            height: '60vh',
-            background: '#F0F0F0',
-            padding: '0px'
+            width: '40vw',
+            height: '65vh',
+            background: 'white',
+            padding: '0px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column'
         }
     }
 
     return (
-        <Modal style={customStyle} isOpen={isOpen} >
+        <Modal ariaHideApp={false} style={customStyle} isOpen={isOpen} >
             <AddTodoModalUI
                 dismiss={dismiss}
                 isUploadingTodo={ isUploadingTodo } 

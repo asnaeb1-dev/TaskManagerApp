@@ -30,7 +30,7 @@ const Sidebar = ({ getItemId }) => {
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>
-                    <div className='footer-content'>
+                    <div className='footer-content' onClick={() => getItemId(4)}>
                         <img id='user-profile-picture' src={UserIcon} alt='dp' />
                     </div>
                 </SidebarFooter>
