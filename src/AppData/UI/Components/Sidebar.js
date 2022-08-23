@@ -23,7 +23,7 @@ const Sidebar = ({ getItemId }) => {
                 </SidebarHeader>
                 <SidebarContent>
                     {/* Handle sidebar open/close */}
-                    <Menu iconShape='square'>
+                    <Menu iconShape='circle'>
                         <MenuItem onClick={() => getItemId(1)} icon={ <FcTodoList size={20}/> } >All todos</MenuItem>
                         <MenuItem onClick={() => getItemId(2)} icon={ <MdOutlineFavoriteBorder color='red' size={20}/> } >Favorite todos</MenuItem>
                         <MenuItem onClick={() => getItemId(3)} icon={ <FcOvertime size={20}/> } > Schedule </MenuItem>

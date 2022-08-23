@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
-import './ComponentStyles/header.css';
 import { BsSearch } from "react-icons/bs";
 import { IoIosAdd } from "react-icons/io";
 
 const Header = ({title, type, openModal}) => {
+
+    const[sizeOffSet, setSizeOffSet] = useState(true)
+
     return(
-        <div className="header-main">
-            <h1 style={{flex: 1, display: 'flex', justifyContent: 'flex-start', marginLeft: '20px'}}>{type === 1 ? "Todos": "Favourites"}</h1>
-            <div className="search-bar">
-                <BsSearch size={20} color={'black'} />
-                <input id="search-inpt" type={'text'} placeholder={ type === 1? 'Search todos...': "Search favourites..." } onChange={e => console.log(e.target.value) } />
+        <div className="p-4 w-full flex flex-row justify-between">
+            <h1 className="font-bold text-2xl lg:text-3xl">{type === 1 ? "Todos": "Favourites"}</h1>
+            <div className="w-1/2 mx-5 flex flex-row items-center border-2 border-blue-400 px-4 h-11 rounded-lg">
+                <input className="h-9 border-0 m-0 p-0" type={'text'} placeholder={ type === 1? 'Search todos...': "Search favourites..." } onChange={e => console.log(e.target.value) } />
+                <BsSearch size={20} color={'rgb(96 165 250)'} />
             </div>
-            <div style={{flex: 1, display: 'flex', justifyContent: 'center'}}>
-                <div id="add-todo-bttn" onClick={() => openModal()}>
+            <div>
+                <button className="flex flex-row px-3 m-0 items-center" onClick={() => openModal()}>
                     <IoIosAdd size={30} color={'white'} />
-                    <h4>{type === 1? "Add todo" : "Add favourite"}</h4>
-                </div>
+                    <h4 className="hidden lg:block">{type === 1? "Add todo" : "Add favourite"}</h4>        
+                </button>
             </div>
             
         </div>

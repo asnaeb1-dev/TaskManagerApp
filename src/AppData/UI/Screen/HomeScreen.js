@@ -24,10 +24,9 @@ const HomeScreen = () => {
     }
 
     return (
-        <div className='home-main'>
+        <div className='flex flex-row h-screen'>
             <Sidebar getItemId={(id) =>  setCurrentScreen(id)} />
             {changeScreen()}
-            
         </div>
     )
 }

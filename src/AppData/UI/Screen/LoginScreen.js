@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useLayoutEffect} from 'react'
-import '../Styles/loginscreen.css'
 import { BsFacebook, BsGoogle } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
 import { css } from "@emotion/react";
@@ -20,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { isNetworkConnected } from '../../Data/Utility/Util';
 import { CONNECTION_FAILURE } from '../../Data/Utility/Strings';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import TitleBarLoginScreen from '../Components/TitleBarLoginScreen';
 
 
 const LoginScreen = () => {
@@ -81,51 +81,44 @@ const LoginScreen = () => {
     })
 
     return (
-        <div className='main'>
-            <div className='part-1'>
-                <h2>Login to Account</h2>
-                <form className='login-form' onSubmit={(e) => handleSubmitForm(e)}>
-                    <input className='inp-text'  placeholder='Enter email'type={"email"} onChange={(e) => setUserCreds({ email: e.target.value, password:userCreds.password })} />
-                    <input minLength={8} className='inp-text' placeholder='Enter password'type={'password'} onChange={(e) => setUserCreds({ email: userCreds.email, password:e.target.value })} />
-                    <button className='btn'>
-                        <p>Login</p>
-                        <ClipLoader color={'blue'} loading={loading} css={css} size={10} />
-                    </button>
-                </form>
-                
-                <div className='div-line'>
-                    <div className='divider'></div>
-                    <p style={{ fontSize: '12px' }}>or</p>
-                    <div className='divider'></div>
-                </div>
-                
-                <div className='other-social-media'>
-                    <button className='fb-btn'>
-                        <BsFacebook size={20} color={'#1773ea'}/>
-                    </button>
-                    <button className='g-btn'>
-                        <BsGoogle size={20} color={'#d73b29'}/>
-                    </button>
-                </div>
-
-                <div className='directive'>
-                    <p>Don't have an account? </p>
-                    <p><Link to={"/signup"}> Create Account </Link></p>
+        <div className='flex flex-col w-full h-screen'>
+            <TitleBarLoginScreen/>
+            <div className='flex-1 h-screen grid md:grid-cols-2 sm:grid-cols-1'>
+                <div className='flex flex-1 flex-col justify-center items-center'>
+                    <h2 className='font-bold lg:text-3xl sm:text-2xl my-4 '>Login to Account</h2>
+                    <form className='w-2/3' onSubmit={(e) => handleSubmitForm(e)}>
+                        <input className='w-full h-11 px-4 text-sm rounded-md mt-4 outline-none border-blue-400 border-2'  placeholder='Enter email'type={"email"} onChange={(e) => setUserCreds({ email: e.target.value, password:userCreds.password })} />
+                        <input minLength={8} className='w-full h-11 px-4 text-sm rounded-md mt-4 border-blue-400 outline-none  border-2' placeholder='Enter password'type={'password'} onChange={(e) => setUserCreds({ email: userCreds.email, password:e.target.value })} />
+                        <button>
+                            <p>Login</p>
+                            <ClipLoader color={'blue'} loading={loading} css={css} size={10} />
+                        </button>
+                    </form>
                     
+                    <div className='w-1/2 rounded-3xl h-[1.5px] my-4 bg-blue-400'>
+                    </div>
+                    
+                    <div className='w-2/3 flex flex-row h-10 mb-4'>
+                        <button className='w-full mx-2 px-4 flex flex-row items-center  rounded-lg bg-slate-200 border-slate-200'>
+                            <BsFacebook size={20} color={'#1773ea'}/>
+                            <h1 className='font-bold w-full mr-3 text-blue-700'>Facebook</h1>
+                        </button>
+                        <button className='w-full mx-2 px-4 flex flex-row items-center rounded-lg bg-slate-200 border-slate-200'>
+                            <BsGoogle size={20} color={'#d73b29'}/>
+                            <h1 className='font-bold w-full mr-3 text-red-600'>Google</h1>
+                        </button>
+                    </div>
+
+                    <div className='w-2/3 flex flex-row justify-center mt-6'>
+                        <p className='text-md'>Don't have an account? </p>
+                        <p className='text-md mx-2 text-blue-400'><Link to={"/signup"}> Create Account </Link></p>
+        
+                    </div>
                 </div>
-            </div>
-            <div className='part-2'>
-                <div className='part-divider'></div>
-                <div className='main-part-2'>
-					<Carousel showArrows={false} showStatus={false} showIndicators={false} centerMode={false} showThumbs={false} infiniteLoop={true} autoPlay={true} className='carousel'>
-						<img alt='use case 1' src={img1} />
-						<img alt='use case 2' src={img2} />
-						<img alt='use case 3' src={img3} />
-					</Carousel>
-				</div>
-            </div>
             <ToastContainer position='bottom-right'/>
+            </div>
         </div>
+        
     )
 }
 

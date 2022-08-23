@@ -4,15 +4,14 @@ import { MdOutlineFavoriteBorder, MdOutlineFavorite, MdEdit, MdDeleteForever } f
 import { ImCross, ImCheckmark } from 'react-icons/im';
 import { BsExclamation } from "react-icons/bs";
 
-const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!", desc = "", isFavourite = false, isUrgent = false, isDone = false, cardColor = '#f4946f'}) => {
+import Calendar from "react-calendar";
 
-    /*
-    .todo-box{
-    background: #f4946f;
-    border-radius: 30px;
-    padding: 20px;
-}
-    */
+const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!", 
+                    desc = "", 
+                    isFavourite = false, 
+                    isUrgent = false, 
+                    isDone = false, 
+                    cardColor = '#f4946f'}) => {
 
     const boxStyle = { width: '100%', padding: '20px', borderRadius: '30px', background:cardColor }
 

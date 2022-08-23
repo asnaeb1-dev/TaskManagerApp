@@ -10,7 +10,7 @@ const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
 
     const customStyle =  {
         content:{
-            borderRadius: '50px',
+            borderRadius: '20px',
             top: '50%',
             left: '50%',
             right: 'auto',

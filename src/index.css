@@ -1,6 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap");
 
-*{
-  font-family: 'Montserrat';
-  font-weight: bold;
-}
+@layer base{
+    button {
+      @apply w-full h-11  rounded-lg mt-5 mb-3 bg-blue-400 text-white font-bold border-2 border-blue-400
+      hover:bg-transparent hover:text-blue-400 rounded-md
+    }
+    input{
+        @apply w-full h-11 px-4 text-sm rounded-md mt-4 outline-none border-blue-400 border-2 text-blue-400
+    }
+    textarea{
+      @apply w-full h-11 text-sm rounded-md outline-none border-blue-400 border-2 text-blue-400
+    }
+
+    *{
+        font-family: 'Montserrat';
+        font-weight: bold;
+    }
+  }
+  

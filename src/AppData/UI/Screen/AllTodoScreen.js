@@ -3,7 +3,6 @@ import Modal from 'react-modal'
 import Header from "../Components/Header";
 import ModalBox from "../Components/ModalBox";
 import TodoItem from "../Components/TodoItem";
-import '../Styles/alltodos.css'
 
 //import svg
 import nodataimg from './../../../nodata.svg';
@@ -12,7 +11,7 @@ const AllTodoScreen = () => {
 
     const[addTodoPopup, setAddTodoPopup] = useState(false);
     const[isUploadingTodo, setIsUploadingTodo] = useState(false);
-    const[todoList, setTodoList] = useState([]);
+    const[todoList, setTodoList] = useState([1,1,1,1]);
 
     const getTodo = (todo) => {
         console.log(todo);
@@ -51,15 +50,18 @@ const AllTodoScreen = () => {
         )
     }
 
-    return (<div className="all-todos-main">
+    return (
+        <div>
             <Header title={"Todos"} type={1} openModal={() => setAddTodoPopup(true)} />
-            {<div className="main-box">
-                {
-                    todoList.map(item => {
-                        return <TodoItem title={item.title} isDone={item.completionStatus} cardColor={item.color}  />
-                    })
-                }
-            </div>}
+            <div className="bg-red-100 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 m-4">
+                <TodoItem/>
+                <TodoItem/>
+                <TodoItem/>
+                <TodoItem/>
+                <TodoItem/>
+                <TodoItem/>
+                <TodoItem/>
+            </div>
             <ModalBox 
                 isUploadingTodo={isUploadingTodo} 
                 getTodo={(todo) => getTodo(todo)} 
