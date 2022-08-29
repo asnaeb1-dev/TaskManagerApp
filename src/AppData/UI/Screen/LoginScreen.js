@@ -3,7 +3,7 @@ import { BsFacebook, BsGoogle } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
 import { css } from "@emotion/react";
 
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
@@ -52,6 +52,7 @@ const LoginScreen = () => {
     const handleLogin = async() => {
         setLoading(true);
         const user = await loginUser(userCreds.email, userCreds.password);
+        console.log(user.response);
         if(!user.error){
             navigate('/home');
         }else{
@@ -78,7 +79,7 @@ const LoginScreen = () => {
             })
         }
         setConnectionAvailable(connectionStatus)
-    })
+    },[])
 
     return (
         <div className='flex flex-col w-full h-screen'>
@@ -89,7 +90,7 @@ const LoginScreen = () => {
                     <form className='w-2/3' onSubmit={(e) => handleSubmitForm(e)}>
                         <input className='w-full h-11 px-4 text-sm rounded-md mt-4 outline-none border-blue-400 border-2'  placeholder='Enter email'type={"email"} onChange={(e) => setUserCreds({ email: e.target.value, password:userCreds.password })} />
                         <input minLength={8} className='w-full h-11 px-4 text-sm rounded-md mt-4 border-blue-400 outline-none  border-2' placeholder='Enter password'type={'password'} onChange={(e) => setUserCreds({ email: userCreds.email, password:e.target.value })} />
-                        <button>
+                        <button className='mt-4'>
                             <p>Login</p>
                             <ClipLoader color={'blue'} loading={loading} css={css} size={10} />
                         </button>
@@ -115,7 +116,7 @@ const LoginScreen = () => {
         
                     </div>
                 </div>
-            <ToastContainer position='bottom-right'/>
+                <ToastContainer position='bottom-right'/>
             </div>
         </div>
         

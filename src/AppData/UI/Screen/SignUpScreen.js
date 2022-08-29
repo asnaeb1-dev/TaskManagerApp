@@ -51,7 +51,7 @@ const SignUpScreen = () => {
 			// console.log(user);
 			if(!user.emailVerified){
 				(async() => {
-					const response = await saveUserToDB({ email, username, todos:[], creationDate: Date.now(), displayPicture: '' });
+					const response = await saveUserToDB({ email, username, todos:[], creationDate: Date.now(), displayPicture: ''  }, user.uid );
 					if(response.error){
 						toast(INCONCLUSIVE_ERROR)
 						console.log(response.response);

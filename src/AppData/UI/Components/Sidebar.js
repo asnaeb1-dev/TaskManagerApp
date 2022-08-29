@@ -8,16 +8,29 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { FcTodoList, FcOvertime } from 'react-icons/fc'
 import AppIcon from '../../../app-icon.png'
 import UserIcon from '../../../usericon.png'
+import { useNavigate } from 'react-router-dom';
 
+import { logoutUser } from "../../Data/API/firebaseLogin";
 
 const Sidebar = ({ getItemId }) => {
+
+    const navigate = useNavigate();
+
+    const signoutUser = async() => {
+        const response = await logoutUser();
+        if(!response.error){
+            navigate("/");
+        }else{
+            console.log("Failed to logout!");
+        }
+    }
+
     return(
         <ProSidebar  collapsed={true}>
                 <SidebarHeader>
                     <div className='header-content'>
                         <div className='title-bar'>
                             <img src={AppIcon} width='30px' height='30px' />
-                            <h3>.</h3>
                         </div>
                     </div>
                 </SidebarHeader>
@@ -30,7 +43,7 @@ const Sidebar = ({ getItemId }) => {
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>
-                    <div className='footer-content' onClick={() => getItemId(4)}>
+                    <div className='footer-content' onClick={() => signoutUser()}>
                         <img id='user-profile-picture' src={UserIcon} alt='dp' />
                     </div>
                 </SidebarFooter>

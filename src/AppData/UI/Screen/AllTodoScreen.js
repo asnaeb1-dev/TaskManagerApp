@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import Modal from 'react-modal'
+import React, {useState, useEffect} from "react";
+import { getAllUserDetails, getCurrentUser, saveTodoItemToDB } from "../../Data/API/firebaseLogin";
 import Header from "../Components/Header";
 import ModalBox from "../Components/ModalBox";
 import TodoItem from "../Components/TodoItem";
@@ -7,22 +7,50 @@ import TodoItem from "../Components/TodoItem";
 //import svg
 import nodataimg from './../../../nodata.svg';
 
+//toast dependency
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const AllTodoScreen = () => {
 
     const[addTodoPopup, setAddTodoPopup] = useState(false);
     const[isUploadingTodo, setIsUploadingTodo] = useState(false);
-    const[todoList, setTodoList] = useState([1,1,1,1]);
+    const[todoList, setTodoList] = useState([]);
 
     const getTodo = (todo) => {
-        console.log(todo);
+        // console.log(todo);
         //do it only after things are done 
-        setIsUploadingTodo(true)
         //mimic upload
-        setTimeout(() => {
-            setAddTodoPopup(false)
-            setIsUploadingTodo(false)
-            setTodoList([...todoList, todo])
-        }, 1000)
+        setIsUploadingTodo(true)
+        const tempTodoList = todoList;
+        tempTodoList.push(todo);
+        pushTodoToDB(tempTodoList);
+    }
+
+    //function to push data to db.
+    const pushTodoToDB = async (todoList ) => {
+        const response = await saveTodoItemToDB(todoList, getCurrentUser().uid);
+        if(response.error){
+            console.log(response.response);
+        }else{
+            //reload from the db
+            const currentUser = getCurrentUser();
+            (async (id) => {
+                const userDetails = await getAllUserDetails(id);
+                if(!userDetails.error){
+                    const data = userDetails.response.data();
+                    // console.log(data);
+                    setTodoList(data.todos);
+                }else{
+                    console.log("Failed to get items!");
+                }
+            })
+            (currentUser.uid)
+        }
+        setAddTodoPopup(false)
+        setIsUploadingTodo(false)
+
     }
     
     //this is the UI for when there is nothing to display
@@ -50,23 +78,46 @@ const AllTodoScreen = () => {
         )
     }
 
+    useEffect(() => {
+        const currentUser = getCurrentUser();
+        (async (id) => {
+            const userDetails = await getAllUserDetails(id);
+            if(!userDetails.error){
+                const data = userDetails.response.data();
+                // console.log(data);
+                setTodoList(data.todos);
+            }else{
+                console.log("Failed to get items!");
+            }
+        })
+        (currentUser.uid)
+    }, [])
+
     return (
-        <div>
+        <div className="w-full h-screen">
             <Header title={"Todos"} type={1} openModal={() => setAddTodoPopup(true)} />
-            <div className="bg-red-100 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 m-4">
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 m-4">
+                {
+                    todoList.map((todoItem, index) => {
+                        return <TodoItem 
+                                    key={index}
+                                    title={todoItem.title}
+                                    desc={todoItem.description}
+                                    isDone={todoItem.completionStatus}
+                                    isUrgent={todoItem.isUrgent}
+                                    isFavourite={todoItem.isFavourite}
+                                    startDate={todoItem.startDate}
+                                    endDate={todoItem.endDate}
+                                    cardColor={todoItem.color}/>
+                    })
+                }
+            </div>  
             <ModalBox 
                 isUploadingTodo={isUploadingTodo} 
                 getTodo={(todo) => getTodo(todo)} 
                 dismiss={() => setAddTodoPopup(false)}
                 isOpen={addTodoPopup}/>
+            <ToastContainer position='bottom-right'/>
         </div>
     )
 }

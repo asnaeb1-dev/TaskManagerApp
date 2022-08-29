@@ -12,12 +12,12 @@ import TitleBarLoginScreen from '../Components/TitleBarLoginScreen'
 const App = () => {
   	return (
     	<div className='App'>
-			{/* <Routes>
+			<Routes>
 				<Route path='/' element={<LoginScreen/>} />
 				<Route path="/signup" element={<SignUpScreen/>}/>
 				<Route path="/home" element={<HomeScreen />}/>
-			</Routes> */}
-			<HomeScreen />
+			</Routes>
+			{/* <HomeScreen /> */}
     	</div>
   	)
 }

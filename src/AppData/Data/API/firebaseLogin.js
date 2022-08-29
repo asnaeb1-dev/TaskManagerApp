@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth'
-import { getDocs, collection, getFirestore, addDoc } from 'firebase/firestore'
+import { getAuth, signOut , onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth'
+import { getDocs, collection, getFirestore, addDoc, arrayUnion, arrayRemove, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
 //firebaseConfig
 const firebaseConfig = {
     apiKey: "AIzaSyBIssmxOtQIRq59opgep7hKbOFQdqYp2NA",
@@ -14,6 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 const auth = getAuth();
+const DB_NAME = "users";
 
 const createUserAccount = async (email, password) => {
     const auth = getAuth()
@@ -49,10 +50,10 @@ const getCurrentUser = () => {
     return auth.currentUser;
 }
 
-const saveUserToDB = async(userData) => {
-    const users = collection(db, "users")
+//saves user details to firestore
+const saveUserToDB = async(userData, userID) => {
     try{
-        const response = await addDoc(users, userData);
+        const response = await setDoc(doc(db, DB_NAME, userID), userData);
         return(
             {error: false,
             response}
@@ -65,6 +66,55 @@ const saveUserToDB = async(userData) => {
     }    
 }
 
+//save a certain todo to database
+const saveTodoItemToDB = async (todos, userID) => {
+    try{
+        const response = await updateDoc(doc(db, DB_NAME, userID), {
+            todos
+        });
+        return {
+            error: false,
+            response
+        }
+    }catch(e){
+        return{
+            error: false,
+            response: e
+        }
+    }
+}
 
-export { createUserAccount, loginUser, saveUserToDB, getCurrentUser }
+//gets all user details from Database
+const getAllUserDetails = async (userId) => {
+    try{
+        const userDetails = await getDoc(doc(db, DB_NAME, userId));
+        return {
+            error: false,
+            response: userDetails
+        }
+    }catch(e){
+        return{
+            error: true,
+            response: e
+        }
+    }
+}
+
+const logoutUser = async () => {
+    try{
+        const response = await signOut(getAuth());
+        return {
+            error: false,
+            response
+        }
+    }catch(e){
+        return{
+            error: true,
+            response: e
+        }
+    }
+}
+
+
+export { createUserAccount, loginUser, saveUserToDB, getCurrentUser, saveTodoItemToDB, logoutUser, getAllUserDetails }
 

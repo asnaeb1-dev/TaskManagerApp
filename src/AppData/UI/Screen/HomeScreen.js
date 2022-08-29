@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import '../Styles/homescreen.css'
 import 'react-pro-sidebar/dist/css/styles.css';
+import { getCurrentUser } from '../../Data/API/firebaseLogin';
 import Sidebar from '../Components/Sidebar';
 import AllTodoScreen from './AllTodoScreen';
 import FavouriteScreen from './FavouriteScreen';
@@ -24,8 +24,8 @@ const HomeScreen = () => {
     }
 
     return (
-        <div className='flex flex-row h-screen'>
-            <Sidebar getItemId={(id) =>  setCurrentScreen(id)} />
+        <div className='flex flex-row h-screen w-full'>
+            <Sidebar getItemId={id => setCurrentScreen(id)} />
             {changeScreen()}
         </div>
     )

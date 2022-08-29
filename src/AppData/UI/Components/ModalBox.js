@@ -18,7 +18,7 @@ const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '40vw',
-            height: '65vh',
+            height: '75vh',
             background: 'white',
             padding: '0px',
             display: 'flex',
