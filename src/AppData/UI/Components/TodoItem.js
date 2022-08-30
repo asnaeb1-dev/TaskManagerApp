@@ -1,57 +1,91 @@
 import React from "react";
 import { MdOutlineFavoriteBorder, MdEdit, MdDeleteForever } from "react-icons/md";
 import { ImCross, ImCheckmark } from 'react-icons/im';
-import { BsExclamation } from "react-icons/bs";
+import { BsExclamation, BsCalendar3 } from "react-icons/bs";
 
 const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!", 
                     desc = "", 
+                    index = -1,
                     isFavourite = false, 
                     isUrgent = false, 
                     isDone = false, 
                     startDate ="",
                     endDate="",
+                    handleClick,
                     cardColor = '#f4946f'}) => {
 
 
-    return(
-        <div className="w-full h-full bg-red-700 rounded-tr-3xl rounded-b-3xl" >
-                <div className="w-full h-full rounded-3xl bg-purple-400 p-4 flex flex-col">
-                    {/* control console */}
-                    <div className="w-full  flex flex-row items-center bg-violet-800">
+    const processDate = (startDate, endDate) => {
+        if(endDate === "" || startDate === "") return "N/A"
+        const start = startDate.split("-");
+        const end = endDate.split("-");
 
-                        <span className="mr-2">
+        const newStartDate = `${start[2]}/${start[1]}/${start[0].substring(2, 4)}`;
+        const newEndDate = `${end[2]}/${end[1]}/${end[0].substring(2, 4)}`;
+        return newStartDate +" - "+ newEndDate;
+    }
+
+    const getStyle = (color) => {
+        switch (color){
+            case '#f4946f':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#f4c268':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#ad8cf2':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#02caf2':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#d9e587':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#f74f4f':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#77dc7e':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#ffc0cb':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+            case '#89b7f7':
+                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+        }
+    }
+
+    return(
+        <div className= {!isDone?  "w-full h-full bg-red-700 rounded-tr-3xl rounded-b-3xl shadow-lg" :  "w-full h-full rounded-tr-3xl rounded-b-3xl bg-green-600 shadow-lg"} >
+                <div className={getStyle(cardColor)}>
+                    {/* control console */}
+                    <div className="w-full  flex flex-row items-center ">
+                        <span className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
                             {
                                 isDone?
-                                <ImCheckmark size={20} color={'green'}/>:
+                                <ImCheckmark size={15} color={'green'}/>:
                                 <ImCross size={15} color={'red'}/>
                             }
                         </span>
 
                         {
                             isFavourite?
-                                <span className="mx-2">
-                                    <MdOutlineFavoriteBorder size={20} color={'red'}/>
+                                <span className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
+                                    <MdOutlineFavoriteBorder size={15} color={'red'}/>
                                 </span>:null
                         }
                         
-                        <span  className="mx-2">
-                            <MdDeleteForever size={20} color={'black'}/>
+                        <span  className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
+                            <MdDeleteForever size={15} color={'black'}/>
                         </span>
                         {
                             isUrgent?
-                                <span  className="mx-2">
-                                    <BsExclamation size={28} color={'red'}/>
+                                <span  className="mr-2 rounded-3xl bg-slate-50 p-0.5 bg-opacity-50 hover:bg-opacity-80">
+                                    <BsExclamation size={20} color={'red'}/>
                                 </span>:null
                         }
                        
                     </div>
-                    <p className="w-full font-bold text-lg md:text-2xl lg:text-3xl h-1/2 flex-1 bg-red-300">{title.length > 70 ? title.substring(0, 69) +"..." : title }</p>
-                    <div className="flex flex-row items-center justify-between bg-blue-700">
-                        <div>
-                            <p>6/6/22 - 7/6/22</p>
+                    <p className="w-full font-bold my-3 text-lg md:text-2xl lg:text-3xl flex-1 text-left break-words">{title.length > 70 ? title.substring(0, 69) +"..." : title }</p>
+                    <div className="flex flex-row items-center justify-between mt-2">
+                        <div className="bg-white rounded-3xl px-4 py-2 bg-opacity-50 flex flex-row items-center hover:bg-opacity-80">
+                            <BsCalendar3 className='hidden md:block mr-3' size={15}/>
+                            <p className="text-sm">{processDate(startDate, endDate)}</p>
                         </div>
-                        <div style={{flex: 0.3}}></div>
-                        <span>
+                        <span onClick={e => handleClick("edit", index)} className="rounded-3xl bg-white bg-opacity-50 p-2 hover:bg-opacity-80">
                             <MdEdit color="black" size={20} />
                         </span>
                     </div>

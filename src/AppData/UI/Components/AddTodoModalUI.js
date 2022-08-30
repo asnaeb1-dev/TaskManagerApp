@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { ClipLoader } from 'react-spinners';
-import { ImCross, ImPlus, ImCheckmark } from 'react-icons/im'
+import { ImCross, ImCheckmark } from 'react-icons/im'
 import Switch from 'react-switch';
 
 import { css } from "@emotion/react";
+
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddTodoModalUI = ({ addTodo, isUploadingTodo, dismiss }) => {
 
@@ -20,8 +22,8 @@ const AddTodoModalUI = ({ addTodo, isUploadingTodo, dismiss }) => {
     const handleTodoDataSubmit = (e) => {
         e.preventDefault();
         const user = {
-            title: e.target.todotitle.value,
-            description: e.target.tododesc.value,
+            title: e.target.todotitle.value.toLowerCase(),
+            description: e.target.tododesc.value.toLowerCase(),
             completionStatus: switchStatus.isDoneSwitch,
             startDate: e.target.startdate.value,
             endDate: e.target.enddate.value,

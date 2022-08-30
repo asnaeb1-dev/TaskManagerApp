@@ -1,14 +1,12 @@
 import React from 'react'
-import AppIcon from '../../../app-icon.png'
 import Modal from 'react-modal'
 
+import { ImCross, ImCheckmark } from 'react-icons/im'
+import { APP_COLOR } from '../../Data/Utility/Strings'
 
-import './ComponentStyles/modalbox.css'
-import AddTodoModalUI from './AddTodoModalUI'
-import EditorModalUI from './EditorModalUI'
+const EditorModalUI = ({isOpen = false, dismiss}) => {
 
-const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
-
+    //modal custom style
     const customStyle =  {
         content:{
             borderRadius: '20px',
@@ -31,13 +29,14 @@ const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
 
     return (
         <Modal ariaHideApp={false} style={customStyle} isOpen={isOpen} >
-                <AddTodoModalUI
-                    dismiss={dismiss}
-                    isUploadingTodo={ isUploadingTodo } 
-                    addTodo={(todoObject) => getTodo(todoObject)}/>:
-                <EditorModalUI/>
+            <div className='w-full h-full bg-zinc-100 p-6 flex flex-col'>
+                <div className='flex flex-row items-center'>
+                    <h1 className='flex-1 text-lg'>Edit todo</h1>
+                    <ImCross onClick={() => dismiss()} color={APP_COLOR} />
+                </div>
+            </div>
         </Modal>
     )
 }
 
-export default ModalBox
+export default EditorModalUI

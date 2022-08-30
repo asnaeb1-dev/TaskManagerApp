@@ -8,11 +8,11 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 
 import img1 from '../../../img1.svg'
+
 import img2 from '../../../img2.svg'
 import img3 from '../../../img3.svg'
 
 import { getCurrentUser, loginUser, saveUserToDB } from '../../Data/API/firebaseLogin';
-import { useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
