@@ -1,5 +1,5 @@
 import React from "react";
-import { MdOutlineFavoriteBorder, MdEdit, MdDeleteForever } from "react-icons/md";
+import { MdFavorite, MdEdit, MdDeleteForever } from "react-icons/md";
 import { ImCross, ImCheckmark } from 'react-icons/im';
 import { BsExclamation, BsCalendar3 } from "react-icons/bs";
 
@@ -16,7 +16,7 @@ const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!",
 
 
     const processDate = (startDate, endDate) => {
-        if(endDate === "" || startDate === "") return "N/A"
+        if(endDate === "" || startDate === "") return "N/A";
         const start = startDate.split("-");
         const end = endDate.split("-");
 
@@ -25,31 +25,34 @@ const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!",
         return newStartDate +" - "+ newEndDate;
     }
 
+    //return the style
     const getStyle = (color) => {
         switch (color){
             case '#f4946f':
                 return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
             case '#f4c268':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#f4c268] rounded-3xl p-6 flex flex-col";
             case '#ad8cf2':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#ad8cf2] rounded-3xl p-6 flex flex-col";
             case '#02caf2':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#02caf2] rounded-3xl p-6 flex flex-col";
             case '#d9e587':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#d9e587] rounded-3xl p-6 flex flex-col";
             case '#f74f4f':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#f74f4f] rounded-3xl p-6 flex flex-col";
             case '#77dc7e':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#77dc7e] rounded-3xl p-6 flex flex-col";
             case '#ffc0cb':
-                return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
+                return "w-full h-full bg-[#ffc0cb] rounded-3xl p-6 flex flex-col";
             case '#89b7f7':
+                return "w-full h-full bg-[#89b7f7] rounded-3xl p-6 flex flex-col";
+            default:
                 return "w-full h-full bg-[#f4946f] rounded-3xl p-6 flex flex-col";
         }
     }
 
     return(
-        <div className= {!isDone?  "w-full h-full bg-red-700 rounded-tr-3xl rounded-b-3xl shadow-lg" :  "w-full h-full rounded-tr-3xl rounded-b-3xl bg-green-600 shadow-lg"} >
+        <div className= {!isDone?  "w-full h-full bg-red-700 rounded-tr-3xl rounded-b-3xl shadow-lg hover:shadow-2xl" :  "w-full h-full rounded-tr-3xl rounded-b-3xl bg-green-600 shadow-lg hover:shadow-2xl"} >
                 <div className={getStyle(cardColor)}>
                     {/* control console */}
                     <div className="w-full  flex flex-row items-center ">
@@ -64,11 +67,11 @@ const TodoItem = ({title = "Lorem ipsum is a great way to do stuff!",
                         {
                             isFavourite?
                                 <span className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
-                                    <MdOutlineFavoriteBorder size={15} color={'red'}/>
+                                    <MdFavorite size={15} color={'red'}/>
                                 </span>:null
                         }
                         
-                        <span  className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
+                        <span onClick={() => handleClick("remove", index)}  className="mr-2 rounded-3xl bg-slate-50 p-1 bg-opacity-50 hover:bg-opacity-80">
                             <MdDeleteForever size={15} color={'black'}/>
                         </span>
                         {

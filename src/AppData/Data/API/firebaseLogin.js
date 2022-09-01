@@ -115,6 +115,10 @@ const logoutUser = async () => {
     }
 }
 
+const removeTodo = async(index, userId) => {
+    
+}
+
 
 export { createUserAccount, loginUser, saveUserToDB, getCurrentUser, saveTodoItemToDB, logoutUser, getAllUserDetails }
 

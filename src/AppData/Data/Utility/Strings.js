@@ -6,7 +6,7 @@ export const GOOGLE = "Google";
 export const LOGIN_TEXT = "Login";
 export const SIGNUP_TEXT = "Signup";
 export const UPLOAD_CONFIRMATION = "Successfully added todo";
-
+export const FILTER = "Filter";
 
 //APP COLORS
 export const APP_COLOR = 'rgb(96, 165, 250)';

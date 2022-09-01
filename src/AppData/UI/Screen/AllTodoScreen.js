@@ -14,15 +14,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { APP_COLOR, INCONCLUSIVE_ERROR, UPLOAD_CONFIRMATION } from "../../Data/Utility/Strings";
 import { BounceLoader } from "react-spinners";
 import EditorModalUI from "../Components/EditorModalUI";
+import FilterBar from "../Components/FilterBar";
 
 
 const AllTodoScreen = () => {
 
     const[addTodoPopup, setAddTodoPopup] = useState(false);
     const[isUploadingTodo, setIsUploadingTodo] = useState(false);
-    const[todoList, setTodoList] = useState([1,1,1,1]);
+    const[todoList, setTodoList] = useState([]);
     const[loadingTodos, setLoadingTodos] = useState(false);
     const[editModalOpen, setEditModalOpen] = useState(false);
+    const[currentTodo, setCurrentTodo] = useState(-1);
 
     const getTodo = (todo) => {
         // console.log(todo);
@@ -72,9 +74,13 @@ const AllTodoScreen = () => {
         )
     }
 
-    const handleTodoItemClick= (task) => {
+    const handleTodoItemClick= (task, index) => {
         if(task === "edit"){
             setEditModalOpen(true);
+            setCurrentTodo(index);
+        }else if(task === "remove"){
+            //remove a certain task from todoList
+            
         }
     }
 
@@ -94,7 +100,7 @@ const AllTodoScreen = () => {
                                     isFavourite={todoItem.isFavourite}
                                     startDate={todoItem.startDate}
                                     endDate={todoItem.endDate}
-                                    handleClick={task => handleTodoItemClick(task)}
+                                    handleClick={(task, index) => handleTodoItemClick(task, index)}
                                     cardColor={todoItem.color}/>
                     })
                 }
@@ -111,21 +117,22 @@ const AllTodoScreen = () => {
             </div>
         )
     }
+
     useEffect(() => {
-        // setLoadingTodos(true);
-        // const currentUser = getCurrentUser();
-        // (async (id) => {
-        //     const userDetails = await getAllUserDetails(id);
-        //     if(!userDetails.error){
-        //         const data = userDetails.response.data();
-        //         // console.log(data);
-        //         setTodoList(data.todos);
-        //     }else{
-        //         console.log("Failed to get items!");
-        //     }
-        //     setLoadingTodos(false);
-        // })
-        // (currentUser.uid)
+        setLoadingTodos(true);
+        const currentUser = getCurrentUser();
+        (async (id) => {
+            const userDetails = await getAllUserDetails(id);
+            if(!userDetails.error){
+                const data = userDetails.response.data();
+                // console.log(data);
+                setTodoList(data.todos);
+            }else{
+                console.log("Failed to get items!");
+            }
+            setLoadingTodos(false);
+        })
+        (currentUser.uid)
     }, [])
 
     const triggerSearch = (text) => {
@@ -141,12 +148,12 @@ const AllTodoScreen = () => {
                 type={1} 
                 openModal={() => setAddTodoPopup(true)} 
                 getSearchText={text => triggerSearch(text)} />
-                <div className="w-full sm:h-[85%] md:h-[87%] lg:h-[90%] overflow-y-auto">
-                    {
-                        loadingTodos ? loaderUI() : (todoList.length !== 0 ? todoGrid() : emptyBox())
-                    }
-                </div>
-                
+            {/* <FilterBar/> */}
+            <div className="w-full sm:h-[85%] md:h-[87%] lg:h-[90%] overflow-y-auto">
+            {
+                loadingTodos ? loaderUI() : (todoList.length !== 0 ? todoGrid() : emptyBox())
+            }
+            </div>
             <ModalBox 
                 isUploadingTodo={isUploadingTodo} 
                 getTodo={(todo) => getTodo(todo)} 
@@ -156,6 +163,7 @@ const AllTodoScreen = () => {
             
             <EditorModalUI
                 isOpen={editModalOpen}
+                index={currentTodo}
                 dismiss={() => setEditModalOpen(false)}
             />
             <ToastContainer position='bottom-right'/>

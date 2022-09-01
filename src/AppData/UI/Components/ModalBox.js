@@ -34,7 +34,7 @@ const ModalBox = ({isOpen, getTodo, isUploadingTodo, dismiss}) => {
                 <AddTodoModalUI
                     dismiss={dismiss}
                     isUploadingTodo={ isUploadingTodo } 
-                    addTodo={(todoObject) => getTodo(todoObject)}/>:
+                    addTodo={(todoObject) => getTodo(todoObject)}/>
                 <EditorModalUI/>
         </Modal>
     )
